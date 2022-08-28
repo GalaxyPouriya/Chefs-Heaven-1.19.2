@@ -1,0 +1,17 @@
+{
+  "item.chefsheavenmod.knife": "چاقو",
+  "item.chefsheavenmod.tomato": "گوجه",
+  "item.chefsheavenmod.cooked_tomato": "گوجه کباب شده",
+
+
+  "item.chefsheavenmod.beef_sausage": "سوسیس گوشت گاو",
+  "item.chefsheavenmod.chicken_sausage": "سوسیس مرغ",
+  "item.chefsheavenmod.pork_sausage": "سوسیس خوک",
+
+
+  "item.chefsheavenmod.beef_ham": "ژامبون گوشت",
+  "item.chefsheavenmod.chicken_ham": "ژامبون مرغ",
+  "item.chefsheavenmod.pork_ham": "ژامبون خوک",
+
+  "itemGroup.chefsheavenmodtab": "بهشت اشپز ها"
+}
