@@ -23,7 +23,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> COOKED_TOMATO = ITEMS.register("cooked_tomato",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
-                    .food(new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).effect(new MobEffectInstance(MobEffects.SATURATION, 20, 1), 1.0F).build())));
+                    .food(new FoodProperties.Builder().nutrition(3).build())));
 
 
     public static void register(IEventBus eventBus) {
