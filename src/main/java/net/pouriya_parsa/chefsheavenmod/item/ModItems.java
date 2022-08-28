@@ -40,11 +40,11 @@ public class ModItems {
             .food(ModFoods.PORK_HAM)));
 
     public static final RegistryObject<Item> COOKED_BEEF_SAUSAGE = ITEMS.register("cooked_beef_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
-            .food(ModFoods.BEEF_SAUSAGE)));
+            .food(ModFoods.COOKED_BEEF_SAUSAGE)));
     public static final RegistryObject<Item> COOKED_CHICKEN_SAUSAGE = ITEMS.register("cooked_chicken_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
-            .food(ModFoods.CHICKEN_SAUSAGE)));
+            .food(ModFoods.COOKED_CHICKEN_SAUSAGE)));
     public static final RegistryObject<Item> COOKED_PORK_SAUSAGE = ITEMS.register("cooked_pork_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
-            .food(ModFoods.PORK_SAUSAGE)));
+            .food(ModFoods.PCOOKED_PORK_SAUSAGE)));
 
 
     public static void register(IEventBus eventBus) {

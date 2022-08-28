@@ -16,5 +16,5 @@ public class ModFoods {
 
     public static final FoodProperties COOKED_BEEF_SAUSAGE = (new FoodProperties.Builder().nutrition((int) 7).saturationMod(0.5F).build());
     public static final FoodProperties COOKED_CHICKEN_SAUSAGE = (new FoodProperties.Builder().nutrition(6).saturationMod(0.4F).build());
-    public static final FoodProperties PCOOKED_ORK_SAUSAGE = (new FoodProperties.Builder().nutrition((int) 9).saturationMod(0.7F).build());
+    public static final FoodProperties PCOOKED_PORK_SAUSAGE = (new FoodProperties.Builder().nutrition((int) 9).saturationMod(0.7F).build());
 }
