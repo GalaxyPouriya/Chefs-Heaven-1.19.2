@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "cookingtime": 80,
+  "experience": 0.76,
+  "ingredient": {
+    "item": "chefsheavenmod:tomato"
+  },
+  "result": "chefsheavenmod:cooked_tomato"
+}

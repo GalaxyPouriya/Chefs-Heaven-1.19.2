@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "cookingtime": 400,
+  "experience": 2.35,
+  "ingredient": {
+    "item": "chefsheavenmod:tomato"
+  },
+  "result": "chefsheavenmod:cooked_tomato"
+}
