@@ -3,5 +3,10 @@
   "item.chefsheavenmod.tomato": "Tomato",
   "item.chefsheavenmod.cooked_tomato": "Cooked Tomato",
 
+
+  "item.chefsheavenmod.beef_sausage": "Beef Sausage",
+  "item.chefsheavenmod.chicken_sausage": "Chicken Sausage",
+  "item.chefsheavenmod.pork_sausage": "Pork Sausage",
+
   "itemGroup.chefsheavenmodtab": "Chefs Heaven Mod Tab"
 }
