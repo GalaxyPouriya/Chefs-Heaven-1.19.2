@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "cookingtime": 600,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "chefsheavenmod:chicken_sausage"
+  },
+  "result": "chefsheavenmod:cooked_chicken_sausage"
+}

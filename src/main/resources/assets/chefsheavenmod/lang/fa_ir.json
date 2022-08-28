@@ -13,5 +13,11 @@
   "item.chefsheavenmod.chicken_ham": "ژامبون مرغ",
   "item.chefsheavenmod.pork_ham": "ژامبون خوک",
 
+
+  "item.chefsheavenmod.cooked_beef_sausage": "سوسیس گوشت گاو پخته شده",
+  "item.chefsheavenmod.cooked_chicken_sausage": "سوسیس گوشت مرغ پخته شده",
+  "item.chefsheavenmod.cooked_pork_sausage": "سوسیس گوشت خوک پخته شده",
+
+
   "itemGroup.chefsheavenmodtab": "بهشت اشپز ها"
 }

@@ -13,5 +13,11 @@
   "item.chefsheavenmod.chicken_ham": "Chicken Ham",
   "item.chefsheavenmod.pork_ham": "Pork Ham",
 
+
+  "item.chefsheavenmod.cooked_beef_sausage": "Cooked Beef Sausage",
+  "item.chefsheavenmod.cooked_chicken_sausage": "Cooked Chicken Sausage",
+  "item.chefsheavenmod.cooked_pork_sausage": "Cooked Pork Sausage",
+
+
   "itemGroup.chefsheavenmodtab": "Chefs Heaven Mod Tab"
 }
