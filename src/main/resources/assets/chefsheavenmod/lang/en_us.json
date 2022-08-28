@@ -8,5 +8,10 @@
   "item.chefsheavenmod.chicken_sausage": "Chicken Sausage",
   "item.chefsheavenmod.pork_sausage": "Pork Sausage",
 
+
+  "item.chefsheavenmod.beef_ham": "Beef Ham",
+  "item.chefsheavenmod.chicken_ham": "Chicken Ham",
+  "item.chefsheavenmod.pork_ham": "Pork Ham",
+
   "itemGroup.chefsheavenmodtab": "Chefs Heaven Mod Tab"
 }

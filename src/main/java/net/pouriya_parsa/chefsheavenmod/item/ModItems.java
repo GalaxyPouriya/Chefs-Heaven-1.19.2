@@ -20,15 +20,24 @@ public class ModItems {
 
     public static final RegistryObject<Item> TOMATO = ITEMS.register("tomato",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
-                    .food(new FoodProperties.Builder().nutrition(3).build())));
-
+                    .food(ModFoods.TOMATO)));
     public static final RegistryObject<Item> COOKED_TOMATO = ITEMS.register("cooked_tomato",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
-                    .food(new FoodProperties.Builder().nutrition(3).build())));
+                    .food(ModFoods.COOKED_TOMATO)));
 
-    public static final RegistryObject<Item> BEEF_SAUSAGE = ITEMS.register("beef_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB).food(ModFoods.BEEF_SAUSAGE)));
-    public static final RegistryObject<Item> CHICKEN_SAUSAGE = ITEMS.register("chicken_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB).food(ModFoods.CHICKEN_SAUSAGE)));
-    public static final RegistryObject<Item> PORK_SAUSAGE = ITEMS.register("pork_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB).food(ModFoods.PORK_SAUSAGE)));
+    public static final RegistryObject<Item> BEEF_SAUSAGE = ITEMS.register("beef_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
+            .food(ModFoods.BEEF_SAUSAGE)));
+    public static final RegistryObject<Item> CHICKEN_SAUSAGE = ITEMS.register("chicken_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
+            .food(ModFoods.CHICKEN_SAUSAGE)));
+    public static final RegistryObject<Item> PORK_SAUSAGE = ITEMS.register("pork_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
+            .food(ModFoods.PORK_SAUSAGE)));
+
+    public static final RegistryObject<Item> BEEF_HAM = ITEMS.register("beef_ham", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
+            .food(ModFoods.BEEF_HAM)));
+    public static final RegistryObject<Item> CHICKEN_HAM = ITEMS.register("chicken_ham", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
+            .food(ModFoods.CHICKEN_HAM)));
+    public static final RegistryObject<Item> PORK_HAM = ITEMS.register("pork_ham", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
+            .food(ModFoods.PORK_HAM)));
 
 
     public static void register(IEventBus eventBus) {
