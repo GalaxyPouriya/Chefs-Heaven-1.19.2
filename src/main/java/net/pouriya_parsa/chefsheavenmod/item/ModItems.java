@@ -1,5 +1,6 @@
 package net.pouriya_parsa.chefsheavenmod.item;
 
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -13,6 +14,10 @@ public class ModItems {
 
     public static final RegistryObject<Item> KNIFE = ITEMS.register("knife",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
+
+    public static final RegistryObject<Item> TOMATO = ITEMS.register("tomato",
+            () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
+                    .food(new FoodProperties.Builder().nutrition(3).build())));
 
 
     public static void register(IEventBus eventBus) {
