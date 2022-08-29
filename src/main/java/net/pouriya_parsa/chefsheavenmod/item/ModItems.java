@@ -9,6 +9,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.pouriya_parsa.chefsheavenmod.ChefsHeavenMod;
+import net.pouriya_parsa.chefsheavenmod.item.custom.BlackPepperItem;
+import net.pouriya_parsa.chefsheavenmod.item.custom.GreenPepperItem;
+import net.pouriya_parsa.chefsheavenmod.item.custom.RedPepperItem;
 import net.pouriya_parsa.chefsheavenmod.item.properties.ModFoods;
 
 public class ModItems {
@@ -45,6 +48,16 @@ public class ModItems {
             .food(ModFoods.COOKED_CHICKEN_SAUSAGE)));
     public static final RegistryObject<Item> COOKED_PORK_SAUSAGE = ITEMS.register("cooked_pork_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
             .food(ModFoods.PCOOKED_PORK_SAUSAGE)));
+
+    public static final RegistryObject<Item> DISH = ITEMS.register("dish",
+            () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
+
+    public static final RegistryObject<Item> RED_PEPPER = ITEMS.register("red_pepper", () -> new RedPepperItem(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
+            .food(ModFoods.RED_PEPPER)));
+    public static final RegistryObject<Item> GREEN_PEPPER = ITEMS.register("green_pepper", () -> new GreenPepperItem(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
+            .food(ModFoods.GREEN_PEPPER)));
+    public static final RegistryObject<Item> BLACK_PEPPER = ITEMS.register("black_pepper", () -> new BlackPepperItem(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
+            .food(ModFoods.BLACK_PEPPER)));
 
 
     public static void register(IEventBus eventBus) {
