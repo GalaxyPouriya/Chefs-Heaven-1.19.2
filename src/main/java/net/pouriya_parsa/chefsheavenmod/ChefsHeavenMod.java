@@ -1,6 +1,7 @@
 package net.pouriya_parsa.chefsheavenmod;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -8,7 +9,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.pouriya_parsa.chefsheavenmod.block.ModBlocks;
+import net.pouriya_parsa.chefsheavenmod.block.entity.ModBlockEntities;
 import net.pouriya_parsa.chefsheavenmod.item.ModItems;
+import net.pouriya_parsa.chefsheavenmod.recipe.ModRecipes;
+import net.pouriya_parsa.chefsheavenmod.screen.ModMenuTypes;
+import net.pouriya_parsa.chefsheavenmod.screen.screens.OilCreatorScreen;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -21,8 +27,12 @@ public class ChefsHeavenMod {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
+        ModMenuTypes.register(modEventBus);
+        ModRecipes.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -37,6 +47,7 @@ public class ChefsHeavenMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
 
+            MenuScreens.register(ModMenuTypes.OIL_CREATOR_MENU.get(), OilCreatorScreen::new);
         }
     }
 }

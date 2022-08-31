@@ -47,7 +47,7 @@ public class ModItems {
     public static final RegistryObject<Item> COOKED_CHICKEN_SAUSAGE = ITEMS.register("cooked_chicken_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
             .food(ModFoods.COOKED_CHICKEN_SAUSAGE)));
     public static final RegistryObject<Item> COOKED_PORK_SAUSAGE = ITEMS.register("cooked_pork_sausage", () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
-            .food(ModFoods.PCOOKED_PORK_SAUSAGE)));
+            .food(ModFoods.COOKED_PORK_SAUSAGE)));
 
     public static final RegistryObject<Item> DISH = ITEMS.register("dish",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
