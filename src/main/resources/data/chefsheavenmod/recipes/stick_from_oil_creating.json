@@ -2,10 +2,7 @@
   "type": "chefsheavenmod:oil_creating",
   "ingredients": [
     {
-      "item": "minecraft:coal"
-    },
-    {
-      "item": "minecraft:stick"
+      "item": "chefsheavenmod:cooked_tomato"
     }
   ],
   "output": {

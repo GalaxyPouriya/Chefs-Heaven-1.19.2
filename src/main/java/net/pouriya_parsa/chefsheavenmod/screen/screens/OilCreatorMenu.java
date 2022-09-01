@@ -19,7 +19,7 @@ public class OilCreatorMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public OilCreatorMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(3));
+        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
     public OilCreatorMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
@@ -42,8 +42,12 @@ public class OilCreatorMenu extends AbstractContainerMenu {
         addDataSlots(data);
     }
 
+
     public boolean isCrafting() {
         return data.get(0) > 0;
+    }
+    public boolean hasFuel() {
+        return data.get(2) > 0;
     }
 
     public int getScaledProgress() {
@@ -52,6 +56,13 @@ public class OilCreatorMenu extends AbstractContainerMenu {
         int progressArrowSize = 26; // This is the height in pixels of your arrow
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+    public int getScaledFuelProgress() {
+        int fuelProgress = this.data.get(2);
+        int maxFuelProgress = this.data.get(3);
+        int fuelProgressSize = 14;
+
+        return maxFuelProgress != 0 ? (int)(((float)fuelProgress / (float)maxFuelProgress) * fuelProgressSize) : 0;
     }
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons

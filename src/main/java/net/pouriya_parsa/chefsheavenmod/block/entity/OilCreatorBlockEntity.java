@@ -11,11 +11,14 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.FurnaceFuelSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -42,6 +45,8 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
     protected final ContainerData data;
     private int progress = 0;
     private int maxProgress = 78;
+    private int fuelTime = 0;
+    private int maxFuelTime = 0;
 
     public OilCreatorBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.OIL_CREATOR_BLOCK_ENTITY.get(), pos, state);
@@ -51,6 +56,8 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
                 return switch (index) {
                     case 0 -> OilCreatorBlockEntity.this.progress;
                     case 1 -> OilCreatorBlockEntity.this.maxProgress;
+                    case 2 -> OilCreatorBlockEntity.this.fuelTime;
+                    case 3 -> OilCreatorBlockEntity.this.maxFuelTime;
                     default -> 0;
                 };
             }
@@ -60,12 +67,14 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
                 switch (index) {
                     case 0 -> OilCreatorBlockEntity.this.progress = value;
                     case 1 -> OilCreatorBlockEntity.this.maxProgress = value;
+                    case 2 -> OilCreatorBlockEntity.this.fuelTime = value;
+                    case 3 -> OilCreatorBlockEntity.this.maxFuelTime =value;
                 }
             }
 
             @Override
             public int getCount() {
-                return 2;
+                return 4    ;
             }
         };
     }
@@ -107,6 +116,8 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
     protected void saveAdditional(CompoundTag nbt) {
         nbt.put("inventory", itemHandler.serializeNBT());
         nbt.putInt("oil_creator.progress", this.progress);
+        nbt.putInt("oil_creator.fuelTime", fuelTime);
+        nbt.putInt("oil_creator.maxFuelTime", maxFuelTime);
         super.saveAdditional(nbt);
     }
 
@@ -115,6 +126,8 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
         super.load(nbt);
         progress = nbt.getInt("oil_creator.progress");
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
+        fuelTime = nbt.getInt("oil_creator.fuelTime");
+        maxFuelTime = nbt.getInt("oil_creator.maxFuelTime");
     }
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
@@ -126,25 +139,39 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, OilCreatorBlockEntity pEntity) {
-        if(level.isClientSide()) {
-            return;
+        if(isConsumingFuel(pEntity)) {
+            pEntity.fuelTime--;
         }
 
         if(hasRecipe(pEntity)) {
-            pEntity.progress++;
-            setChanged(level, pos, state);
-
-            if(pEntity.progress >= pEntity.maxProgress) {
-                craftItem(pEntity);
+            if(hasFuelInFuelSlot(pEntity) && !isConsumingFuel(pEntity)) {
+                pEntity.consumeFuel(pEntity);
+            }
+            if(isConsumingFuel(pEntity)) {
+                pEntity.progress++;
+                if(pEntity.progress > pEntity.maxProgress) {
+                    craftItem(pEntity);
+                }
             }
         } else {
             pEntity.resetProgress();
-            setChanged(level, pos, state);
         }
     }
 
     private void resetProgress() {
         this.progress = 0;
+    }
+    private static boolean hasFuelInFuelSlot(OilCreatorBlockEntity entity) {
+        return !entity.itemHandler.getStackInSlot(0).isEmpty();
+    }
+    private static boolean isConsumingFuel(OilCreatorBlockEntity entity) {
+        return entity.fuelTime > 0;
+    }
+    private void consumeFuel(OilCreatorBlockEntity entity) {
+        if(!entity.itemHandler.getStackInSlot(0).isEmpty()) {
+            this.fuelTime = ForgeHooks.getBurnTime(this.itemHandler.extractItem(0, 1, false), RecipeType.SMELTING);
+            this.maxFuelTime = this.fuelTime;
+        }
     }
 
     private static void craftItem(OilCreatorBlockEntity pEntity) {
