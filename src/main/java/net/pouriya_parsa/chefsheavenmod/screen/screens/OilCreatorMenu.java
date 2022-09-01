@@ -5,6 +5,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -12,6 +13,7 @@ import net.minecraftforge.items.SlotItemHandler;
 import net.pouriya_parsa.chefsheavenmod.block.ModBlocks;
 import net.pouriya_parsa.chefsheavenmod.block.entity.OilCreatorBlockEntity;
 import net.pouriya_parsa.chefsheavenmod.screen.ModMenuTypes;
+import net.pouriya_parsa.chefsheavenmod.screen.slot.ModFuelSlot;
 
 public class OilCreatorMenu extends AbstractContainerMenu {
     public final OilCreatorBlockEntity blockEntity;
@@ -33,7 +35,7 @@ public class OilCreatorMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0, 26, 46));
+            this.addSlot(new ModFuelSlot(handler, 0, 26, 46));
             this.addSlot(new SlotItemHandler(handler, 1, 54, 46));
             this.addSlot(new SlotItemHandler(handler, 2, 82, 46));
             this.addSlot(new SlotItemHandler(handler, 3, 113, 46));
@@ -42,6 +44,9 @@ public class OilCreatorMenu extends AbstractContainerMenu {
         addDataSlots(data);
     }
 
+    public boolean isFuel(ItemStack p_38989_) {
+        return net.minecraftforge.common.ForgeHooks.getBurnTime(p_38989_, RecipeType.SMELTING) > 0;
+    }
 
     public boolean isCrafting() {
         return data.get(0) > 0;
