@@ -30,8 +30,6 @@ public class ModBlocks {
     public static final RegistryObject<Block> OIL_CREATOR = registerBlock("oil_creator",
             () -> new OilCreator(BlockBehaviour.Properties.of(Material.METAL)
                     .strength(6f).requiresCorrectToolForDrops().noOcclusion()), ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB);
-        public static final RegistryObject<Block> AAA = registerBlock("AAA",
-            () -> new Block(BlockBehaviour.Properties.of(Material.STONE)), ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB);
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

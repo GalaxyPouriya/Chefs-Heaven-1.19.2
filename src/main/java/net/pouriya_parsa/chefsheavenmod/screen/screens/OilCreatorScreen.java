@@ -37,7 +37,7 @@ public class OilCreatorScreen extends AbstractContainerScreen<OilCreatorMenu> {
 
     private void renderProgressArrow(PoseStack pPoseStack, int x, int y) {
         if(menu.isCrafting()) {
-            blit(pPoseStack, x + 105, y + 33, 176, 0, 8, menu.getScaledProgress());
+            blit(pPoseStack, x + 174, y + 26, 120, 0, 8, menu.getScaledProgress());
         }
     }
 

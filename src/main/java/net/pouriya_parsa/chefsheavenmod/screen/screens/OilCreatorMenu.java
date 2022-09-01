@@ -33,10 +33,10 @@ public class OilCreatorMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0, 12, 15));
-            this.addSlot(new SlotItemHandler(handler, 1, 86, 15));
-            this.addSlot(new SlotItemHandler(handler, 2, 86, 15));
-            this.addSlot(new SlotItemHandler(handler, 3, 86, 60));
+            this.addSlot(new SlotItemHandler(handler, 0, 26, 46));
+            this.addSlot(new SlotItemHandler(handler, 1, 54, 46));
+            this.addSlot(new SlotItemHandler(handler, 2, 82, 46));
+            this.addSlot(new SlotItemHandler(handler, 3, 113, 46));
         });
 
         addDataSlots(data);
