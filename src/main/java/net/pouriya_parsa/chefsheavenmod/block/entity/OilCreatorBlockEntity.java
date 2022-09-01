@@ -13,8 +13,11 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.FurnaceFuelSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -185,10 +188,10 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
                 .getRecipeFor(OilCreatorRecipe.Type.INSTANCE, inventory, level);
 
         if(hasRecipe(pEntity)) {
+            pEntity.itemHandler.extractItem(0, 1, false);
             pEntity.itemHandler.extractItem(1, 1, false);
             pEntity.itemHandler.extractItem(2, 1, false);
-            pEntity.itemHandler.extractItem(3, 1, false);
-            pEntity.itemHandler.setStackInSlot(4, new ItemStack(recipe.get().getResultItem().getItem(),
+            pEntity.itemHandler.setStackInSlot(3, new ItemStack(recipe.get().getResultItem().getItem(),
                     pEntity.itemHandler.getStackInSlot(2).getCount() + 1));
 
             pEntity.resetProgress();
@@ -207,7 +210,11 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
 
 
         return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) &&
-                canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem());
+                canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem())
+                && hasWaterInWaterSlot(entity);
+    }
+    private static boolean hasWaterInWaterSlot(OilCreatorBlockEntity entity) {
+        return PotionUtils.getPotion(entity.itemHandler.getStackInSlot(2)) == Potions.WATER;
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {
