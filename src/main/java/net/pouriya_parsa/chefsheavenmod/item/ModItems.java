@@ -59,6 +59,12 @@ public class ModItems {
     public static final RegistryObject<Item> BLACK_PEPPER = ITEMS.register("black_pepper", () -> new BlackPepperItem(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
             .food(ModFoods.BLACK_PEPPER)));
 
+    public static final RegistryObject<Item> BIG_BOTTLE = ITEMS.register("big_bottle",
+            () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
+
+    public static final RegistryObject<Item> SUNFLOWER_OIL_BIG_BOTTLE = ITEMS.register("sunflower_oil_big_bottle",
+            () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
