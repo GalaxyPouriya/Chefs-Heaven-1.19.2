@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "chefsheavenmod:block/oil_creator" },
+    "facing=east": { "model": "chefsheavenmod:block/oil_creator", "y": 90 },
+    "facing=south": { "model": "chefsheavenmod:block/oil_creator", "y": 180 },
+    "facing=west": { "model": "chefsheavenmod:block/oil_creator", "y": 270 }
+  }
+}

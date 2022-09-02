@@ -10,6 +10,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.fluids.FluidStack;
 import net.pouriya_parsa.chefsheavenmod.ChefsHeavenMod;
 
 import javax.annotation.Nullable;
@@ -34,6 +35,8 @@ public class OilCreatorRecipe implements Recipe<SimpleContainer> {
 
         return recipeItems.get(0).test(pContainer.getItem(1));
     }
+
+
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
