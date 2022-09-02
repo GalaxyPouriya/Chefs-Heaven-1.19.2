@@ -2,7 +2,7 @@
   "type": "chefsheavenmod:oil_creating",
   "ingredients": [
     {
-      "item": "chefsheavenmod:cooked_tomato"
+      "item": "minecraft:sunflower"
     }
   ],
   "output": {

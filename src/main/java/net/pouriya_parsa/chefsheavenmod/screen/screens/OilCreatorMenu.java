@@ -55,6 +55,12 @@ public class OilCreatorMenu extends AbstractContainerMenu {
         return data.get(2) > 0;
     }
 
+    public int getBurnProgress() {
+        int i = this.data.get(2);
+        int j = this.data.get(3);
+        return j != 0 && i != 0 ? i * 24 / j : 0;
+    }
+
     public int getScaledProgress() {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);  // Max Progress
