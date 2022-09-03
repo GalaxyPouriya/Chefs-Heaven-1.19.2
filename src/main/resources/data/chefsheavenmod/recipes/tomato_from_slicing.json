@@ -1,0 +1,11 @@
+{
+  "type": "chefsheavenmod:slicing",
+  "ingredients": [
+    {
+      "item": "chefsheavenmod:tomato"
+    }
+  ],
+  "output": {
+    "item": "minecraft:stick"
+  }
+}

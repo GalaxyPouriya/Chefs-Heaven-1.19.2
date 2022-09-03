@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "chefsheavenmod:block/slice_board" },
+    "facing=east": { "model": "chefsheavenmod:block/slice_board", "y": 90 },
+    "facing=south": { "model": "chefsheavenmod:block/slice_board", "y": 180 },
+    "facing=west": { "model": "chefsheavenmod:block/slice_board", "y": 270 }
+  }
+}

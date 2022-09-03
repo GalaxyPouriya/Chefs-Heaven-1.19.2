@@ -10,6 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.pouriya_parsa.chefsheavenmod.ChefsHeavenMod;
 import net.pouriya_parsa.chefsheavenmod.screen.screens.OilCreatorMenu;
+import net.pouriya_parsa.chefsheavenmod.screen.screens.SlicerBoardMenu;
 
 public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS =
@@ -17,6 +18,10 @@ public class ModMenuTypes {
 
     public static final RegistryObject<MenuType<OilCreatorMenu>> OIL_CREATOR_MENU =
             registerMenuType(OilCreatorMenu::new, "oil_creator_menu");
+
+    public static final RegistryObject<MenuType<SlicerBoardMenu>> SLICER_BOARD_MENU =
+            registerMenuType(SlicerBoardMenu::new, "slicer_board_menu");
+
 
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory,

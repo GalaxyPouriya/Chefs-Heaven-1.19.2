@@ -15,6 +15,7 @@ import net.pouriya_parsa.chefsheavenmod.item.ModItems;
 import net.pouriya_parsa.chefsheavenmod.recipe.ModRecipes;
 import net.pouriya_parsa.chefsheavenmod.screen.ModMenuTypes;
 import net.pouriya_parsa.chefsheavenmod.screen.screens.OilCreatorScreen;
+import net.pouriya_parsa.chefsheavenmod.screen.screens.SlicerBoardScreen;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -48,6 +49,7 @@ public class ChefsHeavenMod {
         public static void onClientSetup(FMLClientSetupEvent event) {
 
             MenuScreens.register(ModMenuTypes.OIL_CREATOR_MENU.get(), OilCreatorScreen::new);
+            MenuScreens.register(ModMenuTypes.SLICER_BOARD_MENU.get(), SlicerBoardScreen::new);
         }
     }
 }

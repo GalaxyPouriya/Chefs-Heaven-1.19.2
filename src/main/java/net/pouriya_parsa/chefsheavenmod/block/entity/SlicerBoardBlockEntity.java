@@ -11,34 +11,27 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.FurnaceFuelSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.pouriya_parsa.chefsheavenmod.block.custom.SlicerBoard;
 import net.pouriya_parsa.chefsheavenmod.item.ModItems;
-import net.pouriya_parsa.chefsheavenmod.recipe.OilCreatorRecipe;
-import net.pouriya_parsa.chefsheavenmod.screen.screens.OilCreatorMenu;
+import net.pouriya_parsa.chefsheavenmod.recipe.SlicerBoardRecipe;
+import net.pouriya_parsa.chefsheavenmod.screen.screens.SlicerBoardMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
-
-    private final ItemStackHandler itemHandler = new ItemStackHandler(4) {
+public class SlicerBoardBlockEntity extends BlockEntity implements MenuProvider {
+    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -50,19 +43,15 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
     protected final ContainerData data;
     private int progress = 0;
     private int maxProgress = 78;
-    private int fuelTime = 0;
-    private int maxFuelTime = 0;
 
-    public OilCreatorBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.OIL_CREATOR_BLOCK_ENTITY.get(), pos, state);
+    public SlicerBoardBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        super(ModBlockEntities.SLICER_BOARD_ENTITY.get(), pPos, pBlockState);
         this.data = new ContainerData() {
             @Override
             public int get(int index) {
                 return switch (index) {
-                    case 0 -> OilCreatorBlockEntity.this.progress;
-                    case 1 -> OilCreatorBlockEntity.this.maxProgress;
-                    case 2 -> OilCreatorBlockEntity.this.fuelTime;
-                    case 3 -> OilCreatorBlockEntity.this.maxFuelTime;
+                    case 0 -> SlicerBoardBlockEntity.this.progress;
+                    case 1 -> SlicerBoardBlockEntity.this.maxProgress;
                     default -> 0;
                 };
             }
@@ -70,30 +59,27 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
             @Override
             public void set(int index, int value) {
                 switch (index) {
-                    case 0 -> OilCreatorBlockEntity.this.progress = value;
-                    case 1 -> OilCreatorBlockEntity.this.maxProgress = value;
-                    case 2 -> OilCreatorBlockEntity.this.fuelTime = value;
-                    case 3 -> OilCreatorBlockEntity.this.maxFuelTime =value;
+                    case 0 -> SlicerBoardBlockEntity.this.progress = value;
+                    case 1 -> SlicerBoardBlockEntity.this.maxProgress = value;
                 }
             }
 
             @Override
             public int getCount() {
-                return 4    ;
+                return 2;
             }
         };
     }
 
-
     @Override
     public Component getDisplayName() {
-        return Component.literal("Oil Creator");
+        return Component.literal("Slicer Board");
     }
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
-        return new OilCreatorMenu(p_39954_, p_39955_, this, this.data);
+    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+        return new SlicerBoardMenu(id, inventory, this, this.data);
     }
 
     @Override
@@ -120,20 +106,18 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     protected void saveAdditional(CompoundTag nbt) {
         nbt.put("inventory", itemHandler.serializeNBT());
-        nbt.putInt("oil_creator.progress", this.progress);
-        nbt.putInt("oil_creator.fuelTime", fuelTime);
-        nbt.putInt("oil_creator.maxFuelTime", maxFuelTime);
+        nbt.putInt("slicer_board.progress", this.progress);
+
         super.saveAdditional(nbt);
     }
 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        progress = nbt.getInt("oil_creator.progress");
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
-        fuelTime = nbt.getInt("oil_creator.fuelTime");
-        maxFuelTime = nbt.getInt("oil_creator.maxFuelTime");
+        progress = nbt.getInt("slicer_board.progress");
     }
+
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
@@ -143,89 +127,75 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, OilCreatorBlockEntity pEntity) {
-        if(isConsumingFuel(pEntity)) {
-            pEntity.fuelTime--;
+    public static void tick(Level level, BlockPos pos, BlockState state, SlicerBoardBlockEntity pEntity) {
+        if(level.isClientSide()) {
+            return;
         }
 
         if(hasRecipe(pEntity)) {
-            if(hasFuelInFuelSlot(pEntity) && !isConsumingFuel(pEntity)) {
-                pEntity.consumeFuel(pEntity);
-            }
-            if(isConsumingFuel(pEntity)) {
-                pEntity.progress++;
-                if(pEntity.progress > pEntity.maxProgress) {
-                    craftItem(pEntity);
-                }
+            pEntity.progress++;
+            setChanged(level, pos, state);
+
+            if(pEntity.progress >= pEntity.maxProgress) {
+                craftItem(pEntity);
             }
         } else {
             pEntity.resetProgress();
+            setChanged(level, pos, state);
         }
     }
 
     private void resetProgress() {
         this.progress = 0;
     }
-    private static boolean hasFuelInFuelSlot(OilCreatorBlockEntity entity) {
-        return !entity.itemHandler.getStackInSlot(0).isEmpty();
-    }
-    private static boolean isConsumingFuel(OilCreatorBlockEntity entity) {
-        return entity.fuelTime > 0;
-    }
-    private void consumeFuel(OilCreatorBlockEntity entity) {
-        if(!entity.itemHandler.getStackInSlot(0).isEmpty()) {
-            this.fuelTime = ForgeHooks.getBurnTime(this.itemHandler.extractItem(0, 1, false), RecipeType.SMELTING);
-            this.maxFuelTime = this.fuelTime;
-        }
-    }
 
-    private static void craftItem(OilCreatorBlockEntity pEntity) {
+    private static void craftItem(SlicerBoardBlockEntity pEntity) {
         Level level = pEntity.level;
-
+        int max = 4;
+        int min = 7;
+        int randomInt = (int)Math.floor(Math.random()*(max-min+1)+min);
         SimpleContainer inventory = new SimpleContainer(pEntity.itemHandler.getSlots());
         for (int i = 0; i < pEntity.itemHandler.getSlots(); i++) {
             inventory.setItem(i, pEntity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<OilCreatorRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(OilCreatorRecipe.Type.INSTANCE, inventory, level);
+        Optional<SlicerBoardRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(SlicerBoardRecipe.Type.INSTANCE, inventory, level);
 
         if(hasRecipe(pEntity)) {
             pEntity.itemHandler.extractItem(0, 1, false);
             pEntity.itemHandler.extractItem(1, 1, false);
-            pEntity.itemHandler.extractItem(2, 1, false);
-            pEntity.itemHandler.setStackInSlot(3, new ItemStack(recipe.get().getResultItem().getItem(),
-                    pEntity.itemHandler.getStackInSlot(2).getCount() + 1));
+            pEntity.itemHandler.setStackInSlot(2, new ItemStack(recipe.get().getResultItem().getItem(),
+                    pEntity.itemHandler.getStackInSlot(2).getCount() + randomInt));
 
             pEntity.resetProgress();
         }
     }
 
-    private static boolean hasRecipe(OilCreatorBlockEntity entity) {
+    private static boolean hasRecipe(SlicerBoardBlockEntity entity) {
         Level level = entity.level;
-
         SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
         for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
             inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<OilCreatorRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(OilCreatorRecipe.Type.INSTANCE, inventory, level);
+        Optional<SlicerBoardRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(SlicerBoardRecipe.Type.INSTANCE, inventory, level);
 
 
         return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) &&
                 canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem())
-                && hasWaterInWaterSlot(entity);
+                && hasKnifeInKnifeSlot(entity);
     }
-    private static boolean hasWaterInWaterSlot(OilCreatorBlockEntity entity) {
-        return entity.itemHandler.getStackInSlot(2).getItem() == ModItems.BIG_BOTTLE.get();
+    private static boolean hasKnifeInKnifeSlot(SlicerBoardBlockEntity entity) {
+        return entity.itemHandler.getStackInSlot(1).getItem() == ModItems.KNIFE.get();
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {
-        return inventory.getItem(3).getItem() == stack.getItem() || inventory.getItem(3).isEmpty();
+        return inventory.getItem(2).getItem() == stack.getItem() || inventory.getItem(2).isEmpty();
     }
 
     private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory) {
-        return inventory.getItem(3).getMaxStackSize() > inventory.getItem(3).getCount();
+        return inventory.getItem(2).getMaxStackSize() > inventory.getItem(2).getCount();
     }
 }

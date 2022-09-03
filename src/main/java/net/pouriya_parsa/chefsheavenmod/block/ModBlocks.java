@@ -2,6 +2,7 @@ package net.pouriya_parsa.chefsheavenmod.block;
 
 
 import net.pouriya_parsa.chefsheavenmod.ChefsHeavenMod;
+import net.pouriya_parsa.chefsheavenmod.block.custom.SlicerBoard;
 import net.pouriya_parsa.chefsheavenmod.item.ModCreativeModeTab;
 import net.pouriya_parsa.chefsheavenmod.item.ModItems;
 
@@ -29,6 +30,10 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> OIL_CREATOR = registerBlock("oil_creator",
             () -> new OilCreator(BlockBehaviour.Properties.of(Material.METAL)
+                    .strength(6f).requiresCorrectToolForDrops().noOcclusion()), ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB);
+
+    public static final RegistryObject<Block> SLICE_BOARD = registerBlock("slice_board",
+            () -> new SlicerBoard(BlockBehaviour.Properties.of(Material.WOOD)
                     .strength(6f).requiresCorrectToolForDrops().noOcclusion()), ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB);
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {

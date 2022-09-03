@@ -17,6 +17,12 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(OilCreatorBlockEntity::new,
                             ModBlocks.OIL_CREATOR.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<SlicerBoardBlockEntity>> SLICER_BOARD_ENTITY =
+            BLOCK_ENTITIES.register("gem_infusing_station", () ->
+                    BlockEntityType.Builder.of(SlicerBoardBlockEntity::new,
+                            ModBlocks.SLICE_BOARD.get()).build(null));
+
+
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

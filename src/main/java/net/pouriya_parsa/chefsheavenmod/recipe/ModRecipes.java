@@ -13,6 +13,9 @@ public class ModRecipes {
 
     public static final RegistryObject<RecipeSerializer<OilCreatorRecipe>> OIL_CREATING_SERIALIZER =
             SERIALIZERS.register("oil_creating", () -> OilCreatorRecipe.Serializer.INSTANCE);
+    public static final RegistryObject<RecipeSerializer<SlicerBoardRecipe>> SLICING_SERIALIZER =
+            SERIALIZERS.register("slicing", () -> SlicerBoardRecipe.Serializer.INSTANCE);
+
 
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);
