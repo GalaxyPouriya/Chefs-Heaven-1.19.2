@@ -1,3 +1,6 @@
 {
-  "parent": "chefsheavenmod:block/sunflower_oil_big_bottle"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "chefsheavenmod:item/sunflower_oil_big_bottle"
+  }
 }

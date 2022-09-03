@@ -54,7 +54,7 @@ public class OilCreatorRecipeCategory implements IRecipeCategory<OilCreatorRecip
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, OilCreatorRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 54, 46).addIngredients(recipe.getIngredients().get(1));
+        builder.addSlot(RecipeIngredientRole.INPUT, 54, 46).addIngredients(recipe.getIngredients().get(0));
 
         builder.addSlot(RecipeIngredientRole.INPUT, 26, 46).addItemStack(new ItemStack(Items.COAL));
 

@@ -1,3 +1,6 @@
 {
-  "parent": "chefsheavenmod:block/big_bottle"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "chefsheavenmod:item/big_bottle"
+  }
 }

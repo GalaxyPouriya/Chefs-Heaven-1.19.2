@@ -23,10 +23,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
+
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.pouriya_parsa.chefsheavenmod.item.ModItems;
 import net.pouriya_parsa.chefsheavenmod.recipe.OilCreatorRecipe;
 import net.pouriya_parsa.chefsheavenmod.screen.screens.OilCreatorMenu;
 import org.jetbrains.annotations.NotNull;
@@ -96,7 +98,7 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if(cap == ForgeCapabilities.ITEM_HANDLER) {
             return lazyItemHandler.cast();
         }
 
@@ -214,7 +216,7 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
                 && hasWaterInWaterSlot(entity);
     }
     private static boolean hasWaterInWaterSlot(OilCreatorBlockEntity entity) {
-        return PotionUtils.getPotion(entity.itemHandler.getStackInSlot(2)) == Potions.WATER;
+        return entity.itemHandler.getStackInSlot(2).getItem() == ModItems.BIG_BOTTLE.get();
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {

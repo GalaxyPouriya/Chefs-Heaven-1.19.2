@@ -26,7 +26,11 @@
   "item.chefsheavenmod.green_pepper": "فلفل سبز",
   "item.chefsheavenmod.black_pepper": "فلفل سیاه",
 
+  "item.chefsheavenmod.big_bottle": "بطری بزرگ",
+  "item.chefsheavenmod.sunflower_oil_big_bottle": "بطری بزرگ روغن افتاب گردان",
+
   "block.chefsheavenmod.oil_creator": "دستگاه روغن ساز",
+
 
   "itemGroup.chefsheavenmodtab": "بهشت اشپز ها"
 }

@@ -29,8 +29,8 @@
 
   "block.chefsheavenmod.oil_creator": "Oil Maker",
 
-  "block.chefsheavenmod.big_bottle": "Big Bottle",
-  "block.chefsheavenmod.sunflower_oil_big_bottle": "Sunflower Oil Big Bottle",
+  "item.chefsheavenmod.big_bottle": "Big Bottle",
+  "item.chefsheavenmod.sunflower_oil_big_bottle": "Sunflower Oil Big Bottle",
 
 
   "itemGroup.chefsheavenmodtab": "Chefs Heaven Mod Tab"
