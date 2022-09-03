@@ -11,6 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.pouriya_parsa.chefsheavenmod.ChefsHeavenMod;
 import net.pouriya_parsa.chefsheavenmod.item.custom.BlackPepperItem;
 import net.pouriya_parsa.chefsheavenmod.item.custom.GreenPepperItem;
+import net.pouriya_parsa.chefsheavenmod.item.custom.KnifeItem;
 import net.pouriya_parsa.chefsheavenmod.item.custom.RedPepperItem;
 import net.pouriya_parsa.chefsheavenmod.item.properties.ModFoods;
 
@@ -19,7 +20,7 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, ChefsHeavenMod.MOD_ID);
 
     public static final RegistryObject<Item> KNIFE = ITEMS.register("knife",
-            () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
+            () -> new KnifeItem(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
 
     public static final RegistryObject<Item> TOMATO = ITEMS.register("tomato",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)

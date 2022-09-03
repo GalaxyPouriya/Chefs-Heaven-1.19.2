@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.pouriya_parsa.chefsheavenmod.ChefsHeavenMod;
 import net.pouriya_parsa.chefsheavenmod.block.ModBlocks;
+import net.pouriya_parsa.chefsheavenmod.item.ModItems;
 import net.pouriya_parsa.chefsheavenmod.recipe.OilCreatorRecipe;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 public class OilCreatorRecipeCategory implements IRecipeCategory<OilCreatorRecipe> {
     public final static ResourceLocation UID = new ResourceLocation(ChefsHeavenMod.MOD_ID, "oil_creating");
     public final static ResourceLocation TEXTURE =
-            new ResourceLocation(ChefsHeavenMod.MOD_ID, "textures/gui/gem_infusing_station_gui.png");
+            new ResourceLocation(ChefsHeavenMod.MOD_ID, "textures/gui/oil_creator_gui.png");
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -57,6 +58,8 @@ public class OilCreatorRecipeCategory implements IRecipeCategory<OilCreatorRecip
         builder.addSlot(RecipeIngredientRole.INPUT, 54, 46).addIngredients(recipe.getIngredients().get(0));
 
         builder.addSlot(RecipeIngredientRole.INPUT, 26, 46).addItemStack(new ItemStack(Items.COAL));
+
+        builder.addSlot(RecipeIngredientRole.INPUT, 82, 46).addItemStack(new ItemStack(ModItems.BIG_BOTTLE.get()));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 113, 46).addItemStack(recipe.getResultItem());
     }

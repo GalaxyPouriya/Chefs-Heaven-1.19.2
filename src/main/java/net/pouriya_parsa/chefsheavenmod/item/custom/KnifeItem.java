@@ -1,5 +1,6 @@
 package net.pouriya_parsa.chefsheavenmod.item.custom;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,15 +15,17 @@ public class KnifeItem extends Item {
         super(pProperties);
     }
 
+
     @Override
-    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-        if(!context.getLevel().isClientSide) {
-            if(context.getPlayer().getItemInHand(InteractionHand.OFF_HAND).is(ModItems.BIG_BOTTLE.get())) {
-                context.getPlayer().addItem(new ItemStack(Items.GLASS_BOTTLE));
-                context.getPlayer().getInventory().offhand.remove(1);
-                context.getPlayer().swing(InteractionHand.MAIN_HAND);
+    public InteractionResult useOn(UseOnContext pContext) {
+        if(!pContext.getLevel().isClientSide) {
+            if(pContext.getPlayer().getItemInHand(InteractionHand.OFF_HAND).is(ModItems.BIG_BOTTLE.get())) {
+                pContext.getPlayer().addItem(new ItemStack(Items.GLASS_BOTTLE));
+                pContext.getPlayer().getOffhandItem().shrink(1);
+                pContext.getPlayer().swing(InteractionHand.MAIN_HAND);
+
             }
         }
-        return super.onItemUseFirst(stack, context);
+        return super.useOn(pContext);
     }
 }
