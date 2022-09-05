@@ -66,6 +66,9 @@ public class ModItems {
     public static final RegistryObject<Item> SUNFLOWER_OIL_BIG_BOTTLE = ITEMS.register("sunflower_oil_big_bottle",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
 
+    public static final RegistryObject<Item> TOMATO_SLICES = ITEMS.register("tomato_slices",
+            () -> new Item(new Item.Properties().stacksTo(6).tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
