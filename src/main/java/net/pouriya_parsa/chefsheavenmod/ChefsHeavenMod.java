@@ -12,6 +12,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.pouriya_parsa.chefsheavenmod.block.ModBlocks;
 import net.pouriya_parsa.chefsheavenmod.block.entity.ModBlockEntities;
 import net.pouriya_parsa.chefsheavenmod.item.ModItems;
+import net.pouriya_parsa.chefsheavenmod.networking.ModMessages;
 import net.pouriya_parsa.chefsheavenmod.recipe.ModRecipes;
 import net.pouriya_parsa.chefsheavenmod.screen.ModMenuTypes;
 import net.pouriya_parsa.chefsheavenmod.screen.screens.OilCreatorScreen;
@@ -45,6 +46,7 @@ public class ChefsHeavenMod {
         event.enqueueWork(() -> {
             ModVillagers.registerPOIs();
         });
+        ModMessages.register();
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

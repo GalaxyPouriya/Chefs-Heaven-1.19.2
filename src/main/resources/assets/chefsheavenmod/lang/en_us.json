@@ -34,6 +34,9 @@
   "item.chefsheavenmod.big_bottle": "Big Bottle",
   "item.chefsheavenmod.sunflower_oil_bottle": "Sunflower Oil Bottle",
 
+  "chefsheavenmod.tooltip.liquid.amount.with.capacity": "%s / %s mB",
+  "chefsheavenmod.tooltip.liquid.amount": "%s mB",
+
   "entity.minecraft.villager.chefsheavenmod.oil_seller": "Oil Seller",
   "itemGroup.chefsheavenmodtab": "Chefs Heaven Mod Tab"
 }

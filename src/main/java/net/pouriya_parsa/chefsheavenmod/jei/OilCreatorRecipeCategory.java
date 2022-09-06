@@ -59,7 +59,8 @@ public class OilCreatorRecipeCategory implements IRecipeCategory<OilCreatorRecip
 
         builder.addSlot(RecipeIngredientRole.INPUT, 26, 46).addItemStack(new ItemStack(Items.COAL));
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 82, 46).addItemStack(new ItemStack(ModItems.BIG_BOTTLE.get()));
+        builder.addSlot(RecipeIngredientRole.INPUT, 82, 46).addIngredients(ForgeTypes.FLUID_STACK,
+                List.of(recipe.getFluid())).setFluidRenderer(69420, false, 52, 18);
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 113, 46).addItemStack(recipe.getResultItem());
     }

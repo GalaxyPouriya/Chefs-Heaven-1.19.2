@@ -19,12 +19,14 @@ public class OilCreatorRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
+    private final FluidStack fluidStack;
 
     public OilCreatorRecipe(ResourceLocation id, ItemStack output,
-                                    NonNullList<Ingredient> recipeItems) {
+                                    NonNullList<Ingredient> recipeItems,  FluidStack fluidStack) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
+        this.fluidStack = fluidStack;
     }
 
     @Override
@@ -36,6 +38,9 @@ public class OilCreatorRecipe implements Recipe<SimpleContainer> {
         return recipeItems.get(0).test(pContainer.getItem(1));
     }
 
+    public FluidStack getFluid() {
+        return fluidStack;
+    }
 
 
     @Override
@@ -90,30 +95,33 @@ public class OilCreatorRecipe implements Recipe<SimpleContainer> {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
             JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(1 , Ingredient.EMPTY);
+            FluidStack fluid = FluidJSONUtil.readFluid(pSerializedRecipe.get("fluid").getAsJsonObject());
 
             for (int i = 0; i < inputs.size(); i++) {
                 inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
             }
 
-            return new OilCreatorRecipe(pRecipeId, output, inputs);
+            return new OilCreatorRecipe(pRecipeId, output, inputs, fluid);
         }
 
         @Override
         public @Nullable
         OilCreatorRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
+            FluidStack fluid = buf.readFluidStack();
 
             for (int i = 0; i < inputs.size(); i++) {
                 inputs.set(i, Ingredient.fromNetwork(buf));
             }
 
             ItemStack output = buf.readItem();
-            return new OilCreatorRecipe(id, output, inputs);
+            return new OilCreatorRecipe(id, output, inputs, fluid);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, OilCreatorRecipe recipe) {
             buf.writeInt(recipe.getIngredients().size());
+            buf.writeFluidStack(recipe.fluidStack);
 
             for (Ingredient ing : recipe.getIngredients()) {
                 ing.toNetwork(buf);

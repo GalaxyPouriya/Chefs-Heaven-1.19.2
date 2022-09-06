@@ -21,19 +21,28 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.pouriya_parsa.chefsheavenmod.block.custom.OilCreator;
 import net.pouriya_parsa.chefsheavenmod.item.ModItems;
+import net.pouriya_parsa.chefsheavenmod.networking.ModMessages;
+import net.pouriya_parsa.chefsheavenmod.networking.packets.FluidSyncCS2Packet;
 import net.pouriya_parsa.chefsheavenmod.recipe.OilCreatorRecipe;
 import net.pouriya_parsa.chefsheavenmod.screen.screens.OilCreatorMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.Optional;
 
 public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
@@ -43,9 +52,50 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
         protected void onContentsChanged(int slot) {
             setChanged();
         }
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return switch (slot) {
+                case 2 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
+                default -> super.isItemValid(slot, stack);
+            };
+        }
     };
 
+    private final FluidTank FLUID_TANK = new FluidTank(69420) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+            if(!level.isClientSide()) {
+                ModMessages.sendToClients(new FluidSyncCS2Packet(this.fluid, worldPosition));
+            }
+        }
+
+        @Override
+        public boolean isFluidValid(FluidStack stack) {
+            return stack.getFluid() == Fluids.WATER;
+        }
+    };
+
+    public void SetFluid(FluidStack stack) {
+        this.FLUID_TANK.setFluid(stack);
+    }
+
+    public  FluidStack getFluidStack() {
+        return this.FLUID_TANK.getFluid();
+    }
+
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+    private LazyOptional<IFluidHandler> lazyFluidHandler = LazyOptional.empty();
+
+    private final Map<Direction, LazyOptional<WrappedHandler>> directionWrappedHandlerMap =
+            Map.of(Direction.DOWN, LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 2, (i, s) -> false)),
+                    Direction.NORTH, LazyOptional.of(() -> new WrappedHandler(itemHandler, (index) -> index == 1,
+                            (index, stack) -> itemHandler.isItemValid(1, stack))),
+                    Direction.SOUTH, LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 2, (i, s) -> false)),
+                    Direction.EAST, LazyOptional.of(() -> new WrappedHandler(itemHandler, (i) -> i == 1,
+                            (index, stack) -> itemHandler.isItemValid(1, stack))),
+                    Direction.WEST, LazyOptional.of(() -> new WrappedHandler(itemHandler, (index) -> index == 0 || index == 1,
+                            (index, stack) -> itemHandler.isItemValid(0, stack) || itemHandler.isItemValid(1, stack))));
 
     protected final ContainerData data;
     private int progress = 0;
@@ -93,13 +143,32 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
+        ModMessages.sendToClients(new FluidSyncCS2Packet(this.getFluidStack(), worldPosition));
         return new OilCreatorMenu(p_39954_, p_39955_, this, this.data);
     }
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if(cap == ForgeCapabilities.ITEM_HANDLER) {
-            return lazyItemHandler.cast();
+            if(side == null) {
+                return lazyItemHandler.cast();
+            }
+            if(directionWrappedHandlerMap.containsKey(side)) {
+                Direction localDir = this.getBlockState().getValue(OilCreator.FACING);
+                if(side == Direction.UP || side == Direction.DOWN) {
+                    return directionWrappedHandlerMap.get(side).cast();
+                }
+                return switch (localDir) {
+                    default -> directionWrappedHandlerMap.get(side.getOpposite()).cast();
+                    case EAST -> directionWrappedHandlerMap.get(side.getClockWise()).cast();
+                    case SOUTH -> directionWrappedHandlerMap.get(side).cast();
+                    case WEST -> directionWrappedHandlerMap.get(side.getCounterClockWise()).cast();
+                };
+            }
+        }
+
+        if(cap == ForgeCapabilities.FLUID_HANDLER) {
+            return lazyFluidHandler.cast();
         }
 
         return super.getCapability(cap, side);
@@ -109,12 +178,14 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
     public void onLoad() {
         super.onLoad();
         lazyItemHandler = LazyOptional.of(() -> itemHandler);
+        lazyFluidHandler = LazyOptional.of(() -> FLUID_TANK);
     }
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
         lazyItemHandler.invalidate();
+        lazyFluidHandler.invalidate();
     }
 
     @Override
@@ -123,6 +194,7 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
         nbt.putInt("oil_creator.progress", this.progress);
         nbt.putInt("oil_creator.fuelTime", fuelTime);
         nbt.putInt("oil_creator.maxFuelTime", maxFuelTime);
+        nbt = FLUID_TANK.writeToNBT(nbt);
         super.saveAdditional(nbt);
     }
 
@@ -133,6 +205,7 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
         fuelTime = nbt.getInt("oil_creator.fuelTime");
         maxFuelTime = nbt.getInt("oil_creator.maxFuelTime");
+        FLUID_TANK.readFromNBT(nbt);
     }
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
@@ -161,6 +234,33 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
         } else {
             pEntity.resetProgress();
         }
+        if(hasFluidItemInSourceSlot(pEntity)) {
+            transferItemFluidInFluidTank(pEntity);
+        }
+    }
+
+
+
+    private static boolean hasFluidItemInSourceSlot(OilCreatorBlockEntity pEntity) {
+        return pEntity.itemHandler.getStackInSlot(2).getCount() > 0;
+    }
+
+    private static void transferItemFluidInFluidTank(OilCreatorBlockEntity pEntity) {
+        pEntity.itemHandler.getStackInSlot(2).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(handler -> {
+            int DrainAmount = Math.min(pEntity.FLUID_TANK.getSpace(), 1030);
+            FluidStack stack = handler.drain(DrainAmount, IFluidHandler.FluidAction.SIMULATE);
+            if(pEntity.FLUID_TANK.isFluidValid(stack)) {
+                stack = handler.drain(DrainAmount, IFluidHandler.FluidAction.EXECUTE);
+                fillTankWithFluid(pEntity, stack, handler.getContainer());
+            }
+        });
+    }
+
+    private static void fillTankWithFluid(OilCreatorBlockEntity pEntity, FluidStack stack, ItemStack container) {
+        pEntity.FLUID_TANK.fill(stack, IFluidHandler.FluidAction.EXECUTE);
+
+        pEntity.itemHandler.extractItem(2, 1, false);
+        pEntity.itemHandler.insertItem(2, container, false);
     }
 
     private void resetProgress() {
@@ -193,13 +293,14 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
         if(hasRecipe(pEntity)) {
             pEntity.itemHandler.extractItem(0, 1, false);
             pEntity.itemHandler.extractItem(1, 1, false);
-            pEntity.itemHandler.extractItem(2, 1, false);
+            pEntity.FLUID_TANK.drain(recipe.get().getFluid().getAmount(), IFluidHandler.FluidAction.EXECUTE);
             pEntity.itemHandler.setStackInSlot(3, new ItemStack(recipe.get().getResultItem().getItem(),
                     pEntity.itemHandler.getStackInSlot(2).getCount() + 1));
 
             pEntity.resetProgress();
         }
     }
+
 
     private static boolean hasRecipe(OilCreatorBlockEntity entity) {
         Level level = entity.level;
@@ -214,11 +315,16 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
 
 
         return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory) &&
-                canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem())
-                && hasWaterInWaterSlot(entity);
+                canInsertItemIntoOutputSlot(inventory, recipe.get().getResultItem()) &&
+                hasCorrectFluidInFluidSlot(entity, recipe) && hasEnoughFluid(entity, recipe);
     }
-    private static boolean hasWaterInWaterSlot(OilCreatorBlockEntity entity) {
-        return entity.itemHandler.getStackInSlot(2).getItem() == ModItems.BIG_BOTTLE.get();
+
+    private static boolean hasEnoughFluid(OilCreatorBlockEntity pEntity, Optional<OilCreatorRecipe> recipe) {
+        return pEntity.FLUID_TANK.getFluidAmount() >= recipe.get().getFluid().getAmount();
+    }
+
+    private static boolean hasCorrectFluidInFluidSlot(OilCreatorBlockEntity entity, Optional<OilCreatorRecipe> recipe) {
+        return recipe.get().getFluid().equals(entity.FLUID_TANK.getFluid());
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {

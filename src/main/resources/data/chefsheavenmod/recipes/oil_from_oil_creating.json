@@ -5,6 +5,10 @@
       "item": "minecraft:sunflower"
     }
   ],
+  "fluid": {
+    "FluidName": "minecraft:water",
+    "Amount": 500
+  },
   "output": {
     "item": "chefsheavenmod:sunflower_oil_big_bottle"
   }

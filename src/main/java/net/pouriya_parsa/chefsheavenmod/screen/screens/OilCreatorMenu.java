@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.SlotItemHandler;
 import net.pouriya_parsa.chefsheavenmod.block.ModBlocks;
 import net.pouriya_parsa.chefsheavenmod.block.entity.OilCreatorBlockEntity;
@@ -20,6 +20,7 @@ public class OilCreatorMenu extends AbstractContainerMenu {
     public final OilCreatorBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
+    private FluidStack fluidStack;
 
     public OilCreatorMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
@@ -31,6 +32,7 @@ public class OilCreatorMenu extends AbstractContainerMenu {
         blockEntity = (OilCreatorBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
+        this.fluidStack = blockEntity.getFluidStack();
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
@@ -47,6 +49,16 @@ public class OilCreatorMenu extends AbstractContainerMenu {
 
     public boolean isFuel(ItemStack p_38989_) {
         return net.minecraftforge.common.ForgeHooks.getBurnTime(p_38989_, RecipeType.SMELTING) > 0;
+    }
+    public OilCreatorBlockEntity getBlockEntity() {
+        return this.blockEntity;
+    }
+    public void setFluid(FluidStack fluidStack) {
+        this.fluidStack = fluidStack;
+    }
+
+    public FluidStack getFluidStack() {
+        return fluidStack;
     }
 
     public boolean isCrafting() {
