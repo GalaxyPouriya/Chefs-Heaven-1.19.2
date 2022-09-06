@@ -40,7 +40,7 @@ public class OilCreatorRecipeCategory implements IRecipeCategory<OilCreatorRecip
 
     @Override
     public Component getTitle() {
-        return Component.literal("Oil Maker");
+        return Component.literal("Oil Creator");
     }
 
     @Override

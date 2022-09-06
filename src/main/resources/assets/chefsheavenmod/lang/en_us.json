@@ -28,11 +28,11 @@
   "item.chefsheavenmod.black_pepper": "Black Pepper",
 
 
-  "block.chefsheavenmod.oil_creator": "Oil Maker",
+  "block.chefsheavenmod.oil_creator": "Oil Creator",
   "block.chefsheavenmod.slice_board": "Slice Board",
 
   "item.chefsheavenmod.big_bottle": "Big Bottle",
-  "item.chefsheavenmod.sunflower_oil_big_bottle": "Sunflower Oil Big Bottle",
+  "item.chefsheavenmod.sunflower_oil_bottle": "Sunflower Oil Bottle",
 
   "entity.minecraft.villager.chefsheavenmod.oil_seller": "Oil Seller",
   "itemGroup.chefsheavenmodtab": "Chefs Heaven Mod Tab"

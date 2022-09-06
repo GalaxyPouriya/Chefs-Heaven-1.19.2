@@ -1,8 +1,5 @@
 package net.pouriya_parsa.chefsheavenmod.item;
 
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -63,7 +60,7 @@ public class ModItems {
     public static final RegistryObject<Item> BIG_BOTTLE = ITEMS.register("big_bottle",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
 
-    public static final RegistryObject<Item> SUNFLOWER_OIL_BIG_BOTTLE = ITEMS.register("sunflower_oil_big_bottle",
+    public static final RegistryObject<Item> SUNFLOWER_OIL_BOTTLE = ITEMS.register("sunflower_oil_bottle",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
 
     public static final RegistryObject<Item> TOMATO_SLICES = ITEMS.register("tomato_slices",

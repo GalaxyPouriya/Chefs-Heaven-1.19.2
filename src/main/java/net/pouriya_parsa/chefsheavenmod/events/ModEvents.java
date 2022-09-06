@@ -1,7 +1,6 @@
 package net.pouriya_parsa.chefsheavenmod.events;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -22,7 +21,7 @@ public class ModEvents {
 
         if(event.getType() == ModVillagers.OIL_SELLER.get()) {
             Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
-            ItemStack stack = new ItemStack(ModItems.SUNFLOWER_OIL_BIG_BOTTLE.get(), 1);
+            ItemStack stack = new ItemStack(ModItems.SUNFLOWER_OIL_BOTTLE.get(), 1);
             ItemStack stack1 = new ItemStack(ModItems.BIG_BOTTLE.get(), 2);
             int villagerLevel = 1;
 
