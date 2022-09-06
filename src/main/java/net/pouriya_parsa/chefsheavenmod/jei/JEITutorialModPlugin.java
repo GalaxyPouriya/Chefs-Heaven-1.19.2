@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.pouriya_parsa.chefsheavenmod.ChefsHeavenMod;
 import net.pouriya_parsa.chefsheavenmod.recipe.OilCreatorRecipe;
+import net.pouriya_parsa.chefsheavenmod.recipe.SlicerBoardRecipe;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +19,9 @@ import java.util.Objects;
 public class JEITutorialModPlugin implements IModPlugin {
     public static RecipeType<OilCreatorRecipe> OIL_CREATING =
             new RecipeType<>(OilCreatorRecipeCategory.UID, OilCreatorRecipe.class);
+
+    public static RecipeType<SlicerBoardRecipe> SLICER_BOARD =
+            new RecipeType<>(SlicerBoardRecipeCategory.UID, SlicerBoardRecipe.class);
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -28,6 +32,8 @@ public class JEITutorialModPlugin implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new
                 OilCreatorRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new
+                SlicerBoardRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -35,6 +41,8 @@ public class JEITutorialModPlugin implements IModPlugin {
         RecipeManager rm = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
 
         List<OilCreatorRecipe> recipesInfusing = rm.getAllRecipesFor(OilCreatorRecipe.Type.INSTANCE);
+        List<SlicerBoardRecipe> recipesSlicing = rm.getAllRecipesFor(SlicerBoardRecipe.Type.INSTANCE);
         registration.addRecipes(OIL_CREATING, recipesInfusing);
+        registration.addRecipes(SLICER_BOARD, recipesSlicing);
     }
 }

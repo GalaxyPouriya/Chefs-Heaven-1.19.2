@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -29,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.Random;
 
 public class SlicerBoardBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
@@ -42,7 +44,7 @@ public class SlicerBoardBlockEntity extends BlockEntity implements MenuProvider 
 
     protected final ContainerData data;
     private int progress = 0;
-    private int maxProgress = 78;
+    private int maxProgress = 330;
 
     public SlicerBoardBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.SLICER_BOARD_ENTITY.get(), pPos, pBlockState);
@@ -151,9 +153,10 @@ public class SlicerBoardBlockEntity extends BlockEntity implements MenuProvider 
 
     private static void craftItem(SlicerBoardBlockEntity pEntity) {
         Level level = pEntity.level;
-        int max = 4;
-        int min = 7;
-        int randomInt = (int)Math.floor(Math.random()*(max-min+1)+min);
+        Random r = new Random();
+        int low = 3;
+        int high = 12;
+        int result = r.nextInt(high-low) + low;
         SimpleContainer inventory = new SimpleContainer(pEntity.itemHandler.getSlots());
         for (int i = 0; i < pEntity.itemHandler.getSlots(); i++) {
             inventory.setItem(i, pEntity.itemHandler.getStackInSlot(i));
@@ -163,10 +166,10 @@ public class SlicerBoardBlockEntity extends BlockEntity implements MenuProvider 
                 .getRecipeFor(SlicerBoardRecipe.Type.INSTANCE, inventory, level);
 
         if(hasRecipe(pEntity)) {
-            pEntity.itemHandler.extractItem(0, 1, false);
+            pEntity.itemHandler.getStackInSlot(0).hurt(1, RandomSource.create(), null);
             pEntity.itemHandler.extractItem(1, 1, false);
             pEntity.itemHandler.setStackInSlot(2, new ItemStack(recipe.get().getResultItem().getItem(),
-                    pEntity.itemHandler.getStackInSlot(2).getCount() + randomInt));
+                    pEntity.itemHandler.getStackInSlot(2).getCount() + result));
 
             pEntity.resetProgress();
         }
@@ -188,7 +191,7 @@ public class SlicerBoardBlockEntity extends BlockEntity implements MenuProvider 
                 && hasKnifeInKnifeSlot(entity);
     }
     private static boolean hasKnifeInKnifeSlot(SlicerBoardBlockEntity entity) {
-        return entity.itemHandler.getStackInSlot(1).getItem() == ModItems.KNIFE.get();
+        return entity.itemHandler.getStackInSlot(0).getItem() == ModItems.KNIFE.get();
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {

@@ -20,7 +20,7 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, ChefsHeavenMod.MOD_ID);
 
     public static final RegistryObject<Item> KNIFE = ITEMS.register("knife",
-            () -> new KnifeItem(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
+            () -> new KnifeItem(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB).durability(410)));
 
     public static final RegistryObject<Item> TOMATO = ITEMS.register("tomato",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)
@@ -67,7 +67,7 @@ public class ModItems {
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
 
     public static final RegistryObject<Item> TOMATO_SLICES = ITEMS.register("tomato_slices",
-            () -> new Item(new Item.Properties().stacksTo(6).tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
+            () -> new Item(new Item.Properties().stacksTo(12).tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
 
 
     public static void register(IEventBus eventBus) {
