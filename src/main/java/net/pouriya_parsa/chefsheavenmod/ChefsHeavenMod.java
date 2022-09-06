@@ -16,6 +16,7 @@ import net.pouriya_parsa.chefsheavenmod.recipe.ModRecipes;
 import net.pouriya_parsa.chefsheavenmod.screen.ModMenuTypes;
 import net.pouriya_parsa.chefsheavenmod.screen.screens.OilCreatorScreen;
 import net.pouriya_parsa.chefsheavenmod.screen.screens.SlicerBoardScreen;
+import net.pouriya_parsa.chefsheavenmod.villager.ModVillagers;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -35,11 +36,15 @@ public class ChefsHeavenMod {
         ModMenuTypes.register(modEventBus);
         ModRecipes.register(modEventBus);
 
+        ModVillagers.register(modEventBus);
+
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        event.enqueueWork(() -> {
+            ModVillagers.registerPOIs();
+        });
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
