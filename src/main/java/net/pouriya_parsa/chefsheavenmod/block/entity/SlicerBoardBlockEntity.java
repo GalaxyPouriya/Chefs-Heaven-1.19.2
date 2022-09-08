@@ -24,6 +24,8 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.pouriya_parsa.chefsheavenmod.block.custom.SlicerBoard;
 import net.pouriya_parsa.chefsheavenmod.item.ModItems;
+import net.pouriya_parsa.chefsheavenmod.networking.ModMessages;
+import net.pouriya_parsa.chefsheavenmod.networking.packets.ItemSyncS2CPacket;
 import net.pouriya_parsa.chefsheavenmod.recipe.SlicerBoardRecipe;
 import net.pouriya_parsa.chefsheavenmod.screen.screens.SlicerBoardMenu;
 import org.jetbrains.annotations.NotNull;
@@ -36,11 +38,30 @@ public class SlicerBoardBlockEntity extends BlockEntity implements MenuProvider 
     private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
-            setChanged();
+
+            ModMessages.sendToClients(new ItemSyncS2CPacket(this, worldPosition));
         }
     };
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+
+    public ItemStack getRenderStack() {
+        ItemStack stack;
+
+        if(!itemHandler.getStackInSlot(2).isEmpty()) {
+            stack = itemHandler.getStackInSlot(2);
+        } else {
+            stack = itemHandler.getStackInSlot(0);
+        }
+
+        return stack;
+    }
+
+    public void setHandler(ItemStackHandler itemStackHandler) {
+        for (int i = 0; i < itemStackHandler.getSlots(); i++) {
+            itemHandler.setStackInSlot(i, itemStackHandler.getStackInSlot(i));
+        }
+    }
 
     protected final ContainerData data;
     private int progress = 0;
@@ -201,4 +222,6 @@ public class SlicerBoardBlockEntity extends BlockEntity implements MenuProvider 
     private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory) {
         return inventory.getItem(2).getMaxStackSize() > inventory.getItem(2).getCount();
     }
+
+
 }

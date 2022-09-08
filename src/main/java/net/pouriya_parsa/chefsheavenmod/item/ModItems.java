@@ -63,6 +63,12 @@ public class ModItems {
     public static final RegistryObject<Item> SUNFLOWER_OIL_BOTTLE = ITEMS.register("sunflower_oil_bottle",
             () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
 
+    public static final RegistryObject<Item> OLIVE_OIL_BOTTLE = ITEMS.register("olive_oil_bottle",
+            () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
+
+    public static final RegistryObject<Item> SESAME_OIL_BOTTLE = ITEMS.register("sesame_oil_bottle",
+            () -> new Item(new Item.Properties().tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
+
     public static final RegistryObject<Item> TOMATO_SLICES = ITEMS.register("tomato_slices",
             () -> new Item(new Item.Properties().stacksTo(12).tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
 

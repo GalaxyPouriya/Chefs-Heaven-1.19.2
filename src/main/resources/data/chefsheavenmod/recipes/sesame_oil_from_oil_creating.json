@@ -2,14 +2,14 @@
   "type": "chefsheavenmod:oil_creating",
   "ingredients": [
     {
-      "item": "minecraft:sunflower"
+      "item": "minecraft:wheat"
     }
   ],
   "fluid": {
     "FluidName": "minecraft:water",
-    "Amount": 1600
+    "Amount": 1300
   },
   "output": {
-    "item": "chefsheavenmod:sunflower_oil_bottle"
+    "item": "chefsheavenmod:sesame_oil_bottle"
   }
 }

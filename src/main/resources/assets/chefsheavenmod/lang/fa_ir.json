@@ -28,9 +28,14 @@
 
   "item.chefsheavenmod.big_bottle": "بطری بزرگ",
   "item.chefsheavenmod.sunflower_oil_big_bottle": "بطری بزرگ روغن افتاب گردان",
+  "item.chefsheavenmod.sesame_oil_big_bottle": "بطری بزرگ روغن کنجد",
+  "item.chefsheavenmod.olive_oil_big_bottle": "بطری بزرگ روغن زیتون",
 
   "block.chefsheavenmod.oil_creator": "دستگاه روغن ساز",
   "block.chefsheavenmod.slice_board": "تخته برش",
+
+  "chefsheavenmod.tooltip.liquid.amount.with.capacity": "%s / %s mB",
+  "chefsheavenmod.tooltip.liquid.amount": "%s mB",
 
   "entity.minecraft.villager.chefsheavenmod.oil_seller": "روغن فروش",
   "itemGroup.chefsheavenmodtab": "بهشت اشپز ها"

@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.FurnaceFuelSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -55,7 +56,10 @@ public class OilCreatorBlockEntity extends BlockEntity implements MenuProvider {
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return switch (slot) {
+                case 0 -> stack.getItem() == Items.COAL;
+                case 1 -> true;
                 case 2 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
+                case 3 -> false;
                 default -> super.isItemValid(slot, stack);
             };
         }
