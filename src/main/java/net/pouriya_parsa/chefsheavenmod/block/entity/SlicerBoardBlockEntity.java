@@ -38,8 +38,11 @@ public class SlicerBoardBlockEntity extends BlockEntity implements MenuProvider 
     private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
+            setChanged();
+            if(!level.isClientSide()) {
+                ModMessages.sendToClients(new ItemSyncS2CPacket(this, worldPosition));
+            }
 
-            ModMessages.sendToClients(new ItemSyncS2CPacket(this, worldPosition));
         }
     };
 

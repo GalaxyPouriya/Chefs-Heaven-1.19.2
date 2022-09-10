@@ -2,6 +2,7 @@ package net.pouriya_parsa.chefsheavenmod.block;
 
 
 import net.pouriya_parsa.chefsheavenmod.ChefsHeavenMod;
+import net.pouriya_parsa.chefsheavenmod.block.custom.FridgeBlock;
 import net.pouriya_parsa.chefsheavenmod.block.custom.SlicerBoard;
 import net.pouriya_parsa.chefsheavenmod.item.ModCreativeModeTab;
 import net.pouriya_parsa.chefsheavenmod.item.ModItems;
@@ -33,8 +34,10 @@ public class ModBlocks {
                     .strength(6f).requiresCorrectToolForDrops().noOcclusion()), ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB);
 
     public static final RegistryObject<Block> SLICE_BOARD = registerBlock("slice_board",
-            () -> new SlicerBoard(BlockBehaviour.Properties.of(Material.WOOD)
-                    .strength(6f).requiresCorrectToolForDrops().noOcclusion()), ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB);
+            () -> new SlicerBoard(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion()), ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB);
+
+    public static final RegistryObject<Block> FRIDGE = registerBlock("fridge",
+            () -> new FridgeBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion()), ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB);
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

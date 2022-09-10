@@ -29,8 +29,8 @@ public class SlicerBoardBER implements BlockEntityRenderer<SlicerBoardBlockEntit
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         ItemStack itemStack = pBlockEntity.getRenderStack();
         pPoseStack.pushPose();
-        pPoseStack.translate(0.5f, 0.65f, 0.5f);
-        pPoseStack.scale(0.75f, 0.75f, 0.75f);
+        pPoseStack.translate(0.5f, 0.1f, 0.35f);
+        pPoseStack.scale(0.45f, 0.45f, 0.45f);
         pPoseStack.mulPose(Vector3f.XP.rotationDegrees(90));
 
         switch (pBlockEntity.getBlockState().getValue(SlicerBoard.FACING)) {
