@@ -72,6 +72,9 @@ public class ModItems {
     public static final RegistryObject<Item> TOMATO_SLICES = ITEMS.register("tomato_slices",
             () -> new Item(new Item.Properties().stacksTo(12).tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
 
+    public static final RegistryObject<Item> OLIVE = ITEMS.register("olive",
+            () -> new Item(new Item.Properties().stacksTo(24).tab(ModCreativeModeTab.CHEFS_HEAVEN_MOD_TAB)));
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

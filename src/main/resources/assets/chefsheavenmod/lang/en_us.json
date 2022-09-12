@@ -35,6 +35,7 @@
   "item.chefsheavenmod.sunflower_oil_bottle": "Sunflower Oil Bottle",
   "item.chefsheavenmod.sesame_oil_bottle": "Sesame Oil Bottle",
   "item.chefsheavenmod.olive_oil_bottle": "Olive Oil Bottle",
+  "item.chefsheavenmod.olive": "Olive Fruit",
 
   "chefsheavenmod.tooltip.liquid.amount.with.capacity": "%s / %s mB",
   "chefsheavenmod.tooltip.liquid.amount": "%s mB",

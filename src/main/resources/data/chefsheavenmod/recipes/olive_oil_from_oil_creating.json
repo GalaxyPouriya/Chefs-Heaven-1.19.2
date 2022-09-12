@@ -2,7 +2,7 @@
   "type": "chefsheavenmod:oil_creating",
   "ingredients": [
     {
-      "item": "minecraft:apple"
+      "item": "chefsheavenmod:olive"
     }
   ],
   "fluid": {
